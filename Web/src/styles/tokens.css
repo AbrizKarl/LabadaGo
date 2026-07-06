@@ -1,0 +1,138 @@
+/* =========================================================
+   LabadaGo design tokens
+   Neutral gray scale + one restrained brand color. Inter for
+   everything. Small radii, thin borders, subtle shadows —
+   built to read as a real product, not a demo.
+   ========================================================= */
+
+:root {
+  /* ---- Neutrals ---- */
+  --gray-25: #fafafb;
+  --gray-50: #f5f6f7;
+  --gray-100: #ececef;
+  --gray-200: #dde0e4;
+  --gray-300: #c3c8cf;
+  --gray-400: #9aa1ab;
+  --gray-500: #717985;
+  --gray-600: #545c68;
+  --gray-700: #3b4250;
+  --gray-800: #262b35;
+  --gray-900: #14171d;
+  --white: #ffffff;
+
+  /* ---- Brand (restrained indigo) ---- */
+  --brand-50: #eef1fb;
+  --brand-100: #dbe1f7;
+  --brand-500: #4a5fc6;
+  --brand-600: #3a4eb0;
+  --brand-700: #2e3f90;
+
+  /* ---- Semantic ---- */
+  --success-600: #1c7a52;
+  --success-50: #e9f6ef;
+  --danger-600: #c23c48;
+  --danger-50: #fbeced;
+  --warning-600: #a06a10;
+  --warning-50: #fbf1e0;
+
+  /* ---- Typography ---- */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+
+  --text-xs: 12px;
+  --text-sm: 13px;
+  --text-base: 14.5px;
+  --text-md: 16px;
+  --text-lg: 20px;
+  --text-xl: 24px;
+  --text-2xl: 30px;
+
+  /* ---- Spacing (4px base grid) ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* ---- Radius ---- */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* ---- Shadow (subtle, layered — never decorative) ---- */
+  --shadow-xs: 0 1px 2px rgba(20, 23, 29, 0.05);
+  --shadow-sm: 0 1px 2px rgba(20, 23, 29, 0.06), 0 1px 6px rgba(20, 23, 29, 0.04);
+  --shadow-md: 0 4px 16px rgba(20, 23, 29, 0.08);
+
+  --border: var(--gray-200);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--gray-25);
+  color: var(--gray-900);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+button,
+input,
+select {
+  font-family: var(--font-sans);
+}
+
+a {
+  color: var(--brand-600);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* single, consistent focus treatment across every interactive element */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--brand-500);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

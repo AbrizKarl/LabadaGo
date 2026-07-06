@@ -1,0 +1,18 @@
+.card {
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.pad-none { padding: 0; }
+.pad-sm { padding: var(--space-4); }
+.pad-md { padding: var(--space-6); }
+
+.interactive {
+  cursor: pointer;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+.interactive:hover {
+  border-color: var(--gray-300);
+  box-shadow: var(--shadow-xs);
+}

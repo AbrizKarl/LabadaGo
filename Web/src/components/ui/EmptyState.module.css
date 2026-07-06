@@ -1,0 +1,31 @@
+.wrap {
+  text-align: center;
+  padding: var(--space-12) var(--space-6);
+}
+
+.iconWrap {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto var(--space-4);
+  border-radius: var(--radius-md);
+  background-color: var(--gray-100);
+  color: var(--gray-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: var(--space-2);
+}
+
+.description {
+  font-size: var(--text-sm);
+  color: var(--gray-500);
+  max-width: 360px;
+  margin: 0 auto var(--space-5);
+  line-height: 1.55;
+}

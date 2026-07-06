@@ -1,0 +1,28 @@
+# ---- Backend (Java / Maven / Spring Boot) ----
+Backend/target/
+Backend/.mvn/
+Backend/mvnw
+Backend/mvnw.cmd
+Backend/src/main/resources/application.properties
+*.class
+*.jar
+*.war
+
+# ---- Web (React / Node) ----
+Web/node_modules/
+Web/build/
+Web/.env
+Web/npm-debug.log*
+
+# ---- Mobile (Android) ----
+mobile/build/
+mobile/.gradle/
+mobile/local.properties
+mobile/*.iml
+
+# ---- IDE / OS files ----
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db

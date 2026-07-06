@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # LabadaGo: A Laundry Shop Management System
 
 LabadaGo is a three-part system: a Spring Boot backend API, a ReactJS web
@@ -70,3 +71,6 @@ functional components that communicate with the backend through fetch
 calls, with client-side routing to redirect logged-in users to a role-based
 dashboard. Further milestones will build out order management, the mobile
 app, and expanded role-based access control.
+=======
+# LabadaGo
+>>>>>>> 05d9fae061c544bc70c9709d85cf80d460d89a9e

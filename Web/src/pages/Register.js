@@ -7,6 +7,7 @@ import Button from "../components/ui/Button";
 import Alert from "../components/ui/Alert";
 import SegmentedControl from "../components/ui/SegmentedControl";
 import PasswordToggleButton from "../components/ui/PasswordToggleButton";
+import styles from "./AuthForm.module.css";
 
 function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -14,11 +15,11 @@ function isValidEmail(value) {
 
 function passwordStrengthLabel(password) {
   if (password.length === 0) return null;
-  if (password.length < 8) return { text: "At least 8 characters", tone: "var(--danger-600)" };
+  if (password.length < 8) return { text: "At least 8 characters", tone: "weak" };
   const varietyCount = [/[A-Z]/, /[a-z]/, /[0-9]/, /[^A-Za-z0-9]/].filter((re) => re.test(password))
     .length;
-  if (varietyCount <= 2) return { text: "Fair — add a number or symbol", tone: "var(--warning-600)" };
-  return { text: "Strong password", tone: "var(--success-600)" };
+  if (varietyCount <= 2) return { text: "Fair — add a number or symbol", tone: "fair" };
+  return { text: "Strong password", tone: "strong" };
 }
 
 function Register() {
@@ -151,7 +152,7 @@ function Register() {
           htmlFor="reg-password"
           hint={
             !passwordError && strength ? (
-              <span style={{ color: strength.tone, fontWeight: 600 }}>{strength.text}</span>
+              <span className={styles[`strength-${strength.tone}`]}>{strength.text}</span>
             ) : undefined
           }
         >
@@ -187,7 +188,7 @@ function Register() {
       </form>
 
       {message && (
-        <div style={{ marginTop: 16 }}>
+        <div className={styles.messageWrap}>
           <Alert variant={isError ? "error" : "success"}>{message}</Alert>
         </div>
       )}

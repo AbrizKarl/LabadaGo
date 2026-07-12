@@ -79,6 +79,20 @@
   color: var(--brand-700);
 }
 
+.navLinkDisabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.navLinkDisabled:hover {
+  background-color: transparent;
+  color: var(--gray-600);
+}
+
+.navLinkLabel {
+  flex: 1;
+}
+
 .sidebarFooter {
   border-top: 1px solid var(--border);
   padding-top: var(--space-3);
@@ -190,6 +204,23 @@
   padding: var(--space-8) var(--space-6);
   max-width: 1040px;
   width: 100%;
+  animation: content-in 0.16s ease;
+}
+
+@keyframes content-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.topbarLeft {
+  display: flex;
+  align-items: center;
 }
 
 /* ---- Mobile ---- */

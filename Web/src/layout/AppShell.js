@@ -61,19 +61,19 @@ function AppShell({ pageTitle, children }) {
             <GridIcon size={17} />
             Dashboard
           </Link>
-          <span className={styles.navLink} aria-disabled="true" style={{ opacity: 0.5, cursor: "default" }}>
+          <span className={`${styles.navLink} ${styles.navLinkDisabled}`} aria-disabled="true">
             <PackageIcon size={17} />
-            <span style={{ flex: 1 }}>Orders</span>
+            <span className={styles.navLinkLabel}>Orders</span>
             <Badge variant="neutral">Soon</Badge>
           </span>
-          <span className={styles.navLink} aria-disabled="true" style={{ opacity: 0.5, cursor: "default" }}>
+          <span className={`${styles.navLink} ${styles.navLinkDisabled}`} aria-disabled="true">
             <UsersIcon size={17} />
-            <span style={{ flex: 1 }}>Customers</span>
+            <span className={styles.navLinkLabel}>Customers</span>
             <Badge variant="neutral">Soon</Badge>
           </span>
-          <span className={styles.navLink} aria-disabled="true" style={{ opacity: 0.5, cursor: "default" }}>
+          <span className={`${styles.navLink} ${styles.navLinkDisabled}`} aria-disabled="true">
             <SettingsIcon size={17} />
-            <span style={{ flex: 1 }}>Settings</span>
+            <span className={styles.navLinkLabel}>Settings</span>
             <Badge variant="neutral">Soon</Badge>
           </span>
         </nav>
@@ -97,7 +97,7 @@ function AppShell({ pageTitle, children }) {
 
       <div className={styles.main}>
         <header className={styles.topbar}>
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div className={styles.topbarLeft}>
             <button
               className={styles.menuButton}
               onClick={() => setMobileOpen((v) => !v)}

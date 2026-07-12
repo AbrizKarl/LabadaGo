@@ -6,6 +6,7 @@ import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import Alert from "../components/ui/Alert";
 import PasswordToggleButton from "../components/ui/PasswordToggleButton";
+import styles from "./AuthForm.module.css";
 
 function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -115,7 +116,7 @@ function Login() {
       </form>
 
       {message && (
-        <div style={{ marginTop: 16 }}>
+        <div className={styles.messageWrap}>
           <Alert variant={isError ? "error" : "success"}>{message}</Alert>
         </div>
       )}

@@ -6,6 +6,7 @@ import Badge from "../components/ui/Badge";
 import Button from "../components/ui/Button";
 import EmptyState from "../components/ui/EmptyState";
 import { InboxIcon } from "../components/icons/Icon";
+import styles from "./Dashboard.module.css";
 
 /**
  * Real dashboards lead with state, not decoration. Until order management
@@ -45,52 +46,29 @@ function Dashboard() {
 
   return (
     <AppShell pageTitle="Dashboard">
-      <div style={{ marginBottom: 28 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
-          <h1 style={{ fontSize: "var(--text-xl)", fontWeight: 700, color: "var(--gray-900)" }}>
-            Welcome back{firstName ? `, ${firstName}` : ""}
-          </h1>
+      <div className={styles.header}>
+        <div className={styles.headerTop}>
+          <h1 className={styles.title}>Welcome back{firstName ? `, ${firstName}` : ""}</h1>
           <Badge variant="brand">{isStaff ? "Shop staff" : "Customer"}</Badge>
         </div>
-        <p style={{ color: "var(--gray-500)", fontSize: "var(--text-sm)" }}>
+        <p className={styles.subtitle}>
           {isStaff
             ? "Here's what's happening with your laundry shop today."
             : "Track your laundry orders from drop-off to pickup."}
         </p>
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-          gap: 16,
-          marginBottom: 24,
-        }}
-      >
+      <div className={styles.statGrid}>
         {stats.map((stat) => (
           <Card key={stat.label} padding="sm">
-            <div style={{ fontSize: "var(--text-sm)", color: "var(--gray-500)", marginBottom: 8 }}>
-              {stat.label}
-            </div>
-            <div style={{ fontSize: "var(--text-2xl)", fontWeight: 700, color: "var(--gray-900)" }}>
-              {stat.value}
-            </div>
+            <div className={styles.statLabel}>{stat.label}</div>
+            <div className={styles.statValue}>{stat.value}</div>
           </Card>
         ))}
       </div>
 
       <Card padding="none">
-        <div
-          style={{
-            padding: "16px 24px",
-            borderBottom: "1px solid var(--border)",
-            fontSize: "var(--text-base)",
-            fontWeight: 600,
-            color: "var(--gray-900)",
-          }}
-        >
-          {isStaff ? "Recent orders" : "Your orders"}
-        </div>
+        <div className={styles.sectionHeader}>{isStaff ? "Recent orders" : "Your orders"}</div>
         <EmptyState
           icon={<InboxIcon size={20} />}
           title="No orders yet"
@@ -111,3 +89,4 @@ function Dashboard() {
 }
 
 export default Dashboard;
+

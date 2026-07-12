@@ -1,0 +1,18 @@
+.strength-weak {
+  color: var(--danger-600);
+  font-weight: 600;
+}
+
+.strength-fair {
+  color: var(--warning-600);
+  font-weight: 600;
+}
+
+.strength-strong {
+  color: var(--success-600);
+  font-weight: 600;
+}
+
+.messageWrap {
+  margin-top: var(--space-4);
+}

@@ -5,14 +5,15 @@ import Card from "../components/ui/Card";
 import Badge from "../components/ui/Badge";
 import Button from "../components/ui/Button";
 import EmptyState from "../components/ui/EmptyState";
-import { InboxIcon } from "../components/icons/Icon";
+import { InboxIcon, PackageIcon, ClipboardCheckIcon, WalletIcon } from "../components/icons/Icon";
 import styles from "./Dashboard.module.css";
 
 /**
  * Real dashboards lead with state, not decoration. Until order management
  * ships (Part 2), the honest state is "zero orders" — so this shows a
  * proper empty state and zeroed stat row instead of four clickable-looking
- * cards that don't go anywhere.
+ * cards that don't go anywhere. No charts here on purpose: a chart of
+ * all-zero data would just be a flat line pretending to be a feature.
  */
 function Dashboard() {
   const [name, setName] = useState("");
@@ -34,14 +35,14 @@ function Dashboard() {
 
   const stats = isStaff
     ? [
-        { label: "Active orders", value: "0" },
-        { label: "Completed today", value: "0" },
-        { label: "Revenue today", value: "\u20b10" },
+        { label: "Active orders", value: "0", icon: PackageIcon, tone: "brand" },
+        { label: "Completed today", value: "0", icon: ClipboardCheckIcon, tone: "success" },
+        { label: "Revenue today", value: "\u20b10", icon: WalletIcon, tone: "warning" },
       ]
     : [
-        { label: "Orders in progress", value: "0" },
-        { label: "Ready for pickup", value: "0" },
-        { label: "Completed orders", value: "0" },
+        { label: "Orders in progress", value: "0", icon: PackageIcon, tone: "brand" },
+        { label: "Ready for pickup", value: "0", icon: ClipboardCheckIcon, tone: "success" },
+        { label: "Completed orders", value: "0", icon: WalletIcon, tone: "warning" },
       ];
 
   return (
@@ -59,12 +60,20 @@ function Dashboard() {
       </div>
 
       <div className={styles.statGrid}>
-        {stats.map((stat) => (
-          <Card key={stat.label} padding="sm">
-            <div className={styles.statLabel}>{stat.label}</div>
-            <div className={styles.statValue}>{stat.value}</div>
-          </Card>
-        ))}
+        {stats.map((stat) => {
+          const StatIcon = stat.icon;
+          return (
+            <Card key={stat.label} padding="sm">
+              <div className={styles.statTop}>
+                <div className={styles.statLabel}>{stat.label}</div>
+                <div className={`${styles.statIcon} ${styles[`statIcon-${stat.tone}`]}`}>
+                  <StatIcon size={16} />
+                </div>
+              </div>
+              <div className={styles.statValue}>{stat.value}</div>
+            </Card>
+          );
+        })}
       </div>
 
       <Card padding="none">

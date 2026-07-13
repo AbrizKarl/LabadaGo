@@ -7,6 +7,7 @@ import Button from "../components/ui/Button";
 import Alert from "../components/ui/Alert";
 import SegmentedControl from "../components/ui/SegmentedControl";
 import PasswordToggleButton from "../components/ui/PasswordToggleButton";
+import { MailIcon, LockIcon, UserIcon } from "../components/icons/Icon";
 import styles from "./AuthForm.module.css";
 
 function isValidEmail(value) {
@@ -130,6 +131,7 @@ function Register() {
             onBlur={() => handleBlur("name")}
             hasError={!!nameError}
             autoComplete="name"
+            leftIcon={<UserIcon size={17} />}
           />
         </FormField>
 
@@ -143,6 +145,7 @@ function Register() {
             onBlur={() => handleBlur("email")}
             hasError={!!emailError}
             autoComplete="email"
+            leftIcon={<MailIcon size={17} />}
           />
         </FormField>
 
@@ -165,6 +168,7 @@ function Register() {
             onBlur={() => handleBlur("password")}
             hasError={!!passwordError}
             autoComplete="new-password"
+            leftIcon={<LockIcon size={17} />}
             rightSlot={<PasswordToggleButton visible={showPassword} onToggle={() => setShowPassword((v) => !v)} />}
           />
         </FormField>
@@ -179,6 +183,7 @@ function Register() {
             onBlur={() => handleBlur("confirmPassword")}
             hasError={!!confirmError}
             autoComplete="new-password"
+            leftIcon={<LockIcon size={17} />}
           />
         </FormField>
 

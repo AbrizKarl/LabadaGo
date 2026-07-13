@@ -150,3 +150,75 @@ export function InboxIcon(props) {
     </Icon>
   );
 }
+
+export function MailIcon(props) {
+  return (
+    <Icon {...props}>
+      <rect x="3.5" y="5.5" width="17" height="13" rx="1.8" />
+      <path d="M4.2 6.5 12 12.7l7.8-6.2" />
+    </Icon>
+  );
+}
+
+export function LockIcon(props) {
+  return (
+    <Icon {...props}>
+      <rect x="5" y="11" width="14" height="9.5" rx="1.8" />
+      <path d="M7.5 11V8a4.5 4.5 0 0 1 9 0v3" />
+    </Icon>
+  );
+}
+
+export function UserIcon(props) {
+  return (
+    <Icon {...props}>
+      <circle cx="12" cy="8.3" r="3.4" />
+      <path d="M4.8 19.5c0-3.4 3.2-6 7.2-6s7.2 2.6 7.2 6" />
+    </Icon>
+  );
+}
+
+export function SearchIcon(props) {
+  return (
+    <Icon {...props}>
+      <circle cx="10.8" cy="10.8" r="6.8" />
+      <line x1="20.5" y1="20.5" x2="15.7" y2="15.7" />
+    </Icon>
+  );
+}
+
+export function ChevronRightIcon(props) {
+  return (
+    <Icon {...props}>
+      <path d="M8.5 5.5 15 12l-6.5 6.5" />
+    </Icon>
+  );
+}
+
+export function PanelLeftIcon(props) {
+  return (
+    <Icon {...props}>
+      <rect x="3.5" y="4.5" width="17" height="15" rx="1.8" />
+      <line x1="9.3" y1="4.5" x2="9.3" y2="19.5" />
+    </Icon>
+  );
+}
+
+export function ClipboardCheckIcon(props) {
+  return (
+    <Icon {...props}>
+      <rect x="5" y="4.5" width="14" height="16" rx="1.8" />
+      <path d="M9 4.5h6a.7.7 0 0 1 .7.7v1.6a.7.7 0 0 1-.7.7H9a.7.7 0 0 1-.7-.7V5.2a.7.7 0 0 1 .7-.7Z" />
+      <path d="M9 13.3l2 2 4-4.3" />
+    </Icon>
+  );
+}
+
+export function WalletIcon(props) {
+  return (
+    <Icon {...props}>
+      <path d="M4 7.3A1.8 1.8 0 0 1 5.8 5.5h12.4A1.8 1.8 0 0 1 20 7.3v9.4a1.8 1.8 0 0 1-1.8 1.8H5.8A1.8 1.8 0 0 1 4 16.7Z" />
+      <path d="M15 12.2a1.5 1.5 0 1 0 0-3h4.5v3Z" />
+    </Icon>
+  );
+}

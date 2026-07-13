@@ -17,22 +17,62 @@
   bottom: 0;
   left: 0;
   z-index: 30;
-  transition: transform 0.18s ease;
+  transition: transform 0.18s ease, width 0.16s ease;
+}
+
+.sidebarCollapsed {
+  width: 72px;
+  padding-left: var(--space-2);
+  padding-right: var(--space-2);
+}
+
+.sidebarTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+  padding: 0 var(--space-2);
+}
+
+.sidebarCollapsed .sidebarTop {
+  justify-content: center;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: 0;
 }
 
 .sidebarBrand {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  padding: 0 var(--space-2);
-  margin-bottom: var(--space-6);
   text-decoration: none;
+  min-width: 0;
 }
 
 .sidebarBrandName {
   font-size: 14.5px;
   font-weight: 700;
   color: var(--gray-900);
+  white-space: nowrap;
+}
+
+.collapseButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  color: var(--gray-400);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+
+.collapseButton:hover {
+  background-color: var(--gray-100);
+  color: var(--gray-700);
 }
 
 .navSection {
@@ -60,6 +100,11 @@
   color: var(--gray-600);
   margin-bottom: 2px;
   text-decoration: none;
+}
+
+.sidebarCollapsed .navLink {
+  justify-content: center;
+  padding: 9px;
 }
 
 .navLink:hover {
@@ -104,6 +149,11 @@
   align-items: center;
   gap: var(--space-3);
   padding: 6px var(--space-2);
+}
+
+.sidebarCollapsed .userRow {
+  justify-content: center;
+  padding: 6px 0;
 }
 
 .avatar {
@@ -154,6 +204,11 @@
   text-align: left;
 }
 
+.sidebarCollapsed .logoutRow {
+  justify-content: center;
+  padding: 8px;
+}
+
 .logoutRow:hover {
   background-color: var(--gray-50);
   color: var(--danger-600);
@@ -166,6 +221,11 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+  transition: margin-left 0.16s ease;
+}
+
+.mainExpanded {
+  margin-left: 72px;
 }
 
 .topbar {
@@ -180,12 +240,74 @@
   position: sticky;
   top: 0;
   z-index: 20;
+  gap: var(--space-4);
 }
 
-.pageTitle {
-  font-size: 15px;
+.topbarLeft {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.topbarRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 13.5px;
+  color: var(--gray-400);
+  min-width: 0;
+}
+
+.breadcrumbRoot {
+  white-space: nowrap;
+}
+
+.breadcrumbCurrent {
   font-weight: 600;
   color: var(--gray-900);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--gray-200);
+  background-color: var(--gray-50);
+  color: var(--gray-400);
+  width: 200px;
+}
+
+.searchInput {
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  color: var(--gray-600);
+  width: 100%;
+  padding: 0;
+}
+
+.searchInput:disabled {
+  cursor: not-allowed;
+}
+
+.searchInput::placeholder {
+  color: var(--gray-400);
+}
+
+.searchInput:focus {
+  outline: none;
 }
 
 .menuButton {
@@ -197,6 +319,7 @@
   padding: 6px;
   border-radius: var(--radius-sm);
   margin-right: var(--space-3);
+  flex-shrink: 0;
 }
 
 .content {
@@ -218,25 +341,24 @@
   }
 }
 
-.topbarLeft {
-  display: flex;
-  align-items: center;
-}
-
 /* ---- Mobile ---- */
 .backdrop {
   display: none;
 }
 
 @media (max-width: 860px) {
-  .sidebar {
+  .sidebar,
+  .sidebarCollapsed {
+    width: 236px;
     transform: translateX(-100%);
     box-shadow: var(--shadow-md);
+    padding: var(--space-5) var(--space-3);
   }
   .sidebarOpen {
     transform: translateX(0);
   }
-  .main {
+  .main,
+  .mainExpanded {
     margin-left: 0;
   }
   .menuButton {
@@ -251,5 +373,11 @@
   }
   .content {
     padding: var(--space-6) var(--space-4);
+  }
+  .searchBox {
+    display: none;
+  }
+  .collapseButton {
+    display: none;
   }
 }

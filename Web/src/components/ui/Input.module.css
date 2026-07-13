@@ -41,6 +41,19 @@
   padding-right: 38px;
 }
 
+.withLeftSlot {
+  padding-left: 36px;
+}
+
+.leftSlot {
+  position: absolute;
+  left: 11px;
+  display: flex;
+  align-items: center;
+  color: var(--gray-400);
+  pointer-events: none;
+}
+
 .rightSlot {
   position: absolute;
   right: 4px;

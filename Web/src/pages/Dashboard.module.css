@@ -27,10 +27,41 @@
   margin-bottom: var(--space-6);
 }
 
+.statTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
 .statLabel {
   font-size: var(--text-sm);
   color: var(--gray-500);
-  margin-bottom: var(--space-2);
+}
+
+.statIcon {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.statIcon-brand {
+  background-color: var(--brand-50);
+  color: var(--brand-600);
+}
+
+.statIcon-success {
+  background-color: var(--success-50);
+  color: var(--success-600);
+}
+
+.statIcon-warning {
+  background-color: var(--warning-50);
+  color: var(--warning-600);
 }
 
 .statValue {

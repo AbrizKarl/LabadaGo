@@ -6,6 +6,7 @@ import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import Alert from "../components/ui/Alert";
 import PasswordToggleButton from "../components/ui/PasswordToggleButton";
+import { MailIcon, LockIcon } from "../components/icons/Icon";
 import styles from "./AuthForm.module.css";
 
 function isValidEmail(value) {
@@ -91,6 +92,7 @@ function Login() {
             hasError={!!emailError}
             autoComplete="email"
             autoFocus
+            leftIcon={<MailIcon size={17} />}
           />
         </FormField>
 
@@ -104,6 +106,7 @@ function Login() {
             onBlur={() => handleBlur("password")}
             hasError={!!passwordError}
             autoComplete="current-password"
+            leftIcon={<LockIcon size={17} />}
             rightSlot={
               <PasswordToggleButton visible={showPassword} onToggle={() => setShowPassword((v) => !v)} />
             }

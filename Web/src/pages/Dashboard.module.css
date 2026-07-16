@@ -1,8 +1,23 @@
-.header {
-  margin-bottom: var(--space-7, 28px);
+/* ---- Hero banner ---- */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  background: linear-gradient(135deg, var(--brand-50), var(--white));
+  border: 1px solid var(--brand-100);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-bottom: var(--space-6);
+  overflow: hidden;
 }
 
-.headerTop {
+.heroText {
+  min-width: 0;
+  flex: 1;
+}
+
+.heroTop {
   display: flex;
   align-items: center;
   gap: var(--space-3);
@@ -16,33 +31,41 @@
 }
 
 .subtitle {
-  color: var(--gray-500);
+  color: var(--gray-600);
   font-size: var(--text-sm);
 }
 
+.heroArt {
+  width: 220px;
+  height: 140px;
+  flex-shrink: 0;
+  display: none;
+}
+
+@media (min-width: 720px) {
+  .heroArt {
+    display: block;
+  }
+}
+
+/* ---- Stat cards ---- */
 .statGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: var(--space-4);
   margin-bottom: var(--space-6);
 }
 
 .statTop {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: var(--space-2);
-}
-
-.statLabel {
-  font-size: var(--text-sm);
-  color: var(--gray-500);
+  align-items: center;
+  gap: var(--space-3);
 }
 
 .statIcon {
-  width: 30px;
-  height: 30px;
-  border-radius: var(--radius-sm);
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -64,17 +87,144 @@
   color: var(--warning-600);
 }
 
+.statText {
+  flex: 1;
+  min-width: 0;
+}
+
+.statLabel {
+  font-size: 12.5px;
+  color: var(--gray-500);
+}
+
 .statValue {
-  font-size: var(--text-2xl);
+  font-size: var(--text-xl);
   font-weight: 700;
   color: var(--gray-900);
   font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+}
+
+.statSub {
+  font-size: 11.5px;
+  color: var(--gray-400);
+}
+
+.statArrow {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--gray-200);
+  background-color: var(--white);
+  color: var(--gray-400);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  flex-shrink: 0;
+}
+
+/* ---- Body grid: orders + quick tips ---- */
+.bodyGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .bodyGrid {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+.ordersHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--border);
 }
 
 .sectionHeader {
-  padding: var(--space-4) var(--space-6);
-  border-bottom: 1px solid var(--border);
   font-size: var(--text-base);
   font-weight: 600;
   color: var(--gray-900);
+}
+
+.tabs {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.tab {
+  padding: 5px 11px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: transparent;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--gray-500);
+  cursor: pointer;
+}
+
+.tab:hover {
+  background-color: var(--gray-50);
+  color: var(--gray-700);
+}
+
+.tabActive {
+  background-color: var(--brand-50);
+  color: var(--brand-700);
+}
+
+.tabActive:hover {
+  background-color: var(--brand-50);
+  color: var(--brand-700);
+}
+
+/* ---- Quick tips panel ---- */
+.tipsHeader {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--gray-900);
+  margin-bottom: var(--space-4);
+}
+
+.tipsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.tipRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.tipIcon {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  background-color: var(--brand-50);
+  color: var(--brand-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tipTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.tipDescription {
+  font-size: 12px;
+  color: var(--gray-500);
+  line-height: 1.4;
 }

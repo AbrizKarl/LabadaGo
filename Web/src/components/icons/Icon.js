@@ -222,3 +222,23 @@ export function WalletIcon(props) {
     </Icon>
   );
 }
+
+export function BellIcon(props) {
+  return (
+    <Icon {...props}>
+      <path d="M6 10.5a6 6 0 0 1 12 0c0 3.2 1 4.6 1.8 5.5H4.2C5 15.1 6 13.7 6 10.5Z" />
+      <path d="M10.2 19a1.9 1.9 0 0 0 3.6 0" />
+    </Icon>
+  );
+}
+
+export function TruckIcon(props) {
+  return (
+    <Icon {...props}>
+      <rect x="3" y="7" width="11" height="9" rx="1" />
+      <path d="M14 10h3.5l2.5 2.7V16h-6Z" />
+      <circle cx="7.5" cy="17.5" r="1.6" />
+      <circle cx="16.5" cy="17.5" r="1.6" />
+    </Icon>
+  );
+}

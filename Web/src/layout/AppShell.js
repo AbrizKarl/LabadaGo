@@ -12,7 +12,9 @@ import {
   XIcon,
   PanelLeftIcon,
   ChevronRightIcon,
+  ChevronDownIcon,
   SearchIcon,
+  BellIcon,
 } from "../components/icons/Icon";
 import styles from "./AppShell.module.css";
 
@@ -36,6 +38,7 @@ const COLLAPSE_KEY = "labadago:sidebar-collapsed";
  */
 function AppShell({ pageTitle, children }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(() => {
     try {
       return localStorage.getItem(COLLAPSE_KEY) === "1";
@@ -194,6 +197,44 @@ function AppShell({ pageTitle, children }) {
                 disabled
                 aria-label="Search (coming soon)"
               />
+            </div>
+            <button
+              className={styles.iconButton}
+              title="Notifications — coming soon"
+              aria-label="Notifications (coming soon)"
+              disabled
+            >
+              <BellIcon size={18} />
+            </button>
+            <div className={styles.userMenuWrap}>
+              <button
+                className={styles.userMenuTrigger}
+                onClick={() => setUserMenuOpen((v) => !v)}
+                aria-haspopup="true"
+                aria-expanded={userMenuOpen}
+              >
+                <div className={styles.topbarAvatar} aria-hidden="true">
+                  {getInitials(name)}
+                </div>
+                <ChevronDownIcon size={14} />
+              </button>
+              {userMenuOpen && (
+                <>
+                  <div className={styles.userMenuBackdrop} onClick={() => setUserMenuOpen(false)} />
+                  <div className={styles.userMenu} role="menu">
+                    <div className={styles.userMenuHeader}>
+                      <div className={styles.userMenuName}>{name}</div>
+                      <div className={styles.userMenuRole}>
+                        {role === "STAFF" ? "Shop Staff" : "Customer"}
+                      </div>
+                    </div>
+                    <button className={styles.userMenuItem} onClick={handleLogout} role="menuitem">
+                      <LogOutIcon size={16} />
+                      Log out
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </header>

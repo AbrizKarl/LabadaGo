@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "../components/Logo";
-import Badge from "../components/ui/Badge";
 import {
   GridIcon,
   PackageIcon,
@@ -29,12 +28,13 @@ const COLLAPSE_KEY = "labadago:sidebar-collapsed";
 /**
  * Persistent sidebar + topbar shell for every authenticated screen.
  *
- * Nav items for pages that don't exist yet (Orders, Customers, Settings)
- * are shown disabled with a "Soon" badge instead of being omitted or
- * linking to a dead route — keeps the information architecture visible
- * from day one. The topbar's search box follows the same rule: it's
- * shown because a real product would have one, but disabled rather than
- * wired to nothing, since there's no searchable data yet.
+ * Orders is a real page now (backed by real order data). Customers and
+ * Settings are still shown disabled with a "Soon" badge rather than
+ * omitted or linking to a dead route — that keeps the information
+ * architecture visible from day one instead of requiring a nav redesign
+ * every time a new page ships. The topbar's search box follows the same
+ * rule: shown because a real product would have one, but disabled since
+ * there's still nothing to search across yet.
  */
 function AppShell({ pageTitle, children }) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -47,6 +47,7 @@ function AppShell({ pageTitle, children }) {
     }
   });
   const navigate = useNavigate();
+  const location = useLocation();
 
   const name = localStorage.getItem("name");
   const role = localStorage.getItem("role");
@@ -101,51 +102,46 @@ function AppShell({ pageTitle, children }) {
           {!collapsed && <div className={styles.navLabel}>Workspace</div>}
           <Link
             to="/dashboard"
-            className={`${styles.navLink} ${styles.navLinkActive}`}
+            className={`${styles.navLink} ${
+              location.pathname === "/dashboard" ? styles.navLinkActive : ""
+            }`}
             title={collapsed ? "Dashboard" : undefined}
           >
             <GridIcon size={17} />
             {!collapsed && "Dashboard"}
           </Link>
-          <span
-            className={`${styles.navLink} ${styles.navLinkDisabled}`}
-            aria-disabled="true"
-            title={collapsed ? "Orders — coming soon" : undefined}
+          <Link
+            to="/orders"
+            className={`${styles.navLink} ${
+              location.pathname === "/orders" ? styles.navLinkActive : ""
+            }`}
+            title={collapsed ? "Orders" : undefined}
           >
             <PackageIcon size={17} />
-            {!collapsed && (
-              <>
-                <span className={styles.navLinkLabel}>Orders</span>
-                <Badge variant="neutral">Soon</Badge>
-              </>
-            )}
-          </span>
-          <span
-            className={`${styles.navLink} ${styles.navLinkDisabled}`}
-            aria-disabled="true"
-            title={collapsed ? "Customers — coming soon" : undefined}
-          >
-            <UsersIcon size={17} />
-            {!collapsed && (
-              <>
-                <span className={styles.navLinkLabel}>Customers</span>
-                <Badge variant="neutral">Soon</Badge>
-              </>
-            )}
-          </span>
-          <span
-            className={`${styles.navLink} ${styles.navLinkDisabled}`}
-            aria-disabled="true"
-            title={collapsed ? "Settings — coming soon" : undefined}
+            {!collapsed && "Orders"}
+          </Link>
+          {role === "STAFF" && (
+            <Link
+              to="/customers"
+              className={`${styles.navLink} ${
+                location.pathname === "/customers" ? styles.navLinkActive : ""
+              }`}
+              title={collapsed ? "Customers" : undefined}
+            >
+              <UsersIcon size={17} />
+              {!collapsed && "Customers"}
+            </Link>
+          )}
+          <Link
+            to="/settings"
+            className={`${styles.navLink} ${
+              location.pathname === "/settings" ? styles.navLinkActive : ""
+            }`}
+            title={collapsed ? "Settings" : undefined}
           >
             <SettingsIcon size={17} />
-            {!collapsed && (
-              <>
-                <span className={styles.navLinkLabel}>Settings</span>
-                <Badge variant="neutral">Soon</Badge>
-              </>
-            )}
-          </span>
+            {!collapsed && "Settings"}
+          </Link>
         </nav>
 
         <div className={styles.sidebarFooter}>

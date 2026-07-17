@@ -2,13 +2,16 @@ package edu.cit.Abriz.LabadaGo.service;
 
 import edu.cit.Abriz.LabadaGo.dto.AuthResponse;
 import edu.cit.Abriz.LabadaGo.dto.LoginRequest;
+import edu.cit.Abriz.LabadaGo.dto.ProfileResponse;
 import edu.cit.Abriz.LabadaGo.dto.RegisterRequest;
 import edu.cit.Abriz.LabadaGo.model.User;
 import edu.cit.Abriz.LabadaGo.repository.UserRepository;
 import edu.cit.Abriz.LabadaGo.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 // this is where all the actual registration/login logic happens
 // controller just calls these methods and returns the result
@@ -69,5 +72,47 @@ public class UserService {
         String token = jwtUtil.generateToken(foundUser.getEmail());
 
         return new AuthResponse("Login successful", token, foundUser.getName(), foundUser.getRole());
+    }
+
+    // Settings page: fetch the logged-in user's own profile
+    public ProfileResponse getProfile(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Account not found.");
+        }
+        return new ProfileResponse(user.getUserId(), user.getName(), user.getEmail(), user.getRole());
+    }
+
+    // Settings page: update the display name
+    public ProfileResponse updateName(String email, String newName) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Account not found.");
+        }
+        if (newName == null || newName.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Name can't be empty.");
+        }
+        user.setName(newName.trim());
+        userRepository.save(user);
+        return new ProfileResponse(user.getUserId(), user.getName(), user.getEmail(), user.getRole());
+    }
+
+    // Settings page: change password, requires the current password to
+    // avoid someone with a stolen, still-valid token locking the real
+    // owner out by silently changing their password
+    public void changePassword(String email, String currentPassword, String newPassword) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Account not found.");
+        }
+        if (currentPassword == null || !passwordEncoder.matches(currentPassword, user.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Current password is incorrect.");
+        }
+        if (newPassword == null || newPassword.length() < 8) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "New password must be at least 8 characters.");
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
     }
 }

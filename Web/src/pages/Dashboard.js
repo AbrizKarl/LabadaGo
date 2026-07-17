@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import AppShell from "../layout/AppShell";
 import Card from "../components/ui/Card";
 import Badge from "../components/ui/Badge";
 import Button from "../components/ui/Button";
 import EmptyState from "../components/ui/EmptyState";
+import Modal from "../components/ui/Modal";
+import NewOrderForm from "../components/NewOrderForm";
 import LaundryIllustration from "../components/LaundryIllustration";
 import {
   InboxIcon,
@@ -14,13 +16,14 @@ import {
   ChevronRightIcon,
   BellIcon,
 } from "../components/icons/Icon";
+import { getMyOrders, getAllOrders, STATUS_LABELS } from "../api/ordersApi";
 import styles from "./Dashboard.module.css";
 
 const CUSTOMER_TABS = [
   { key: "all", label: "All" },
-  { key: "inProgress", label: "In progress" },
-  { key: "ready", label: "Ready" },
-  { key: "completed", label: "Completed" },
+  { key: "IN_PROGRESS", label: "In progress" },
+  { key: "READY", label: "Ready" },
+  { key: "COMPLETED", label: "Completed" },
 ];
 
 const CUSTOMER_TIPS = [
@@ -46,19 +49,38 @@ const CUSTOMER_TIPS = [
   },
 ];
 
+function formatDate(dateStr) {
+  if (!dateStr) return "\u2014";
+  return new Date(dateStr).toLocaleDateString(undefined, { month: "short", day: "numeric" });
+}
+
 /**
- * Real dashboards lead with state, not decoration. There are genuinely
- * zero orders right now, so the stat numbers are honestly zero and the
- * order list's empty state is real — but the hero banner and "Quick
- * tips" panel are legitimate static content that doesn't require any
- * order data to be true, so they're safe to build out now rather than
- * waiting on the Orders feature.
+ * Orders are real now — fetched from the backend, not fabricated. Stat
+ * counts are derived from whatever actually comes back, so if the API
+ * call fails, we show zeros rather than pretending to have data.
  */
 function Dashboard() {
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
   const [activeTab, setActiveTab] = useState("all");
+  const [orders, setOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showNewOrder, setShowNewOrder] = useState(false);
   const navigate = useNavigate();
+
+  const isStaff = role === "STAFF";
+
+  const loadOrders = useCallback(async (currentRole) => {
+    setIsLoading(true);
+    try {
+      const data = currentRole === "STAFF" ? await getAllOrders() : await getMyOrders();
+      setOrders(data);
+    } catch {
+      setOrders([]);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -66,26 +88,40 @@ function Dashboard() {
       navigate("/login");
       return;
     }
+    const savedRole = localStorage.getItem("role");
     setName(localStorage.getItem("name"));
-    setRole(localStorage.getItem("role"));
-  }, [navigate]);
+    setRole(savedRole);
+    loadOrders(savedRole);
+  }, [navigate, loadOrders]);
 
-  const isStaff = role === "STAFF";
   const firstName = name ? name.trim().split(/\s+/)[0] : "";
+
+  const inProgressCount = orders.filter((o) => o.status === "IN_PROGRESS" || o.status === "PENDING").length;
+  const readyCount = orders.filter((o) => o.status === "READY").length;
+  const completedCount = orders.filter((o) => o.status === "COMPLETED").length;
+  const todayRevenue = orders
+    .filter((o) => o.status === "COMPLETED")
+    .reduce((sum, o) => sum + (o.estimatedPrice || 0), 0);
 
   const stats = isStaff
     ? [
-        { label: "Active orders", value: "0", sub: "Currently being processed", icon: PackageIcon, tone: "brand" },
-        { label: "Completed today", value: "0", sub: "Finished and picked up", icon: ClipboardCheckIcon, tone: "success" },
-        { label: "Revenue today", value: "\u20b10", sub: "From completed orders", icon: WalletIcon, tone: "warning" },
+        { label: "Active orders", value: String(inProgressCount), sub: "Currently being processed", icon: PackageIcon, tone: "brand" },
+        { label: "Ready for pickup", value: String(readyCount), sub: "Waiting to be claimed", icon: ClipboardCheckIcon, tone: "success" },
+        { label: "Total revenue", value: "\u20b1" + todayRevenue, sub: "From completed orders", icon: WalletIcon, tone: "warning" },
       ]
     : [
-        { label: "Orders in progress", value: "0", sub: "Currently being processed", icon: PackageIcon, tone: "brand" },
-        { label: "Ready for pickup", value: "0", sub: "Waiting to be claimed", icon: ClipboardCheckIcon, tone: "success" },
-        { label: "Completed orders", value: "0", sub: "Successfully completed", icon: WalletIcon, tone: "warning" },
+        { label: "Orders in progress", value: String(inProgressCount), sub: "Currently being processed", icon: PackageIcon, tone: "brand" },
+        { label: "Ready for pickup", value: String(readyCount), sub: "Waiting to be claimed", icon: ClipboardCheckIcon, tone: "success" },
+        { label: "Completed orders", value: String(completedCount), sub: "Successfully completed", icon: WalletIcon, tone: "warning" },
       ];
 
-  const activeTabLabel = CUSTOMER_TABS.find((t) => t.key === activeTab)?.label.toLowerCase();
+  const recentOrders =
+    activeTab === "all" ? orders.slice(0, 5) : orders.filter((o) => o.status === activeTab).slice(0, 5);
+
+  const handleCreated = (order) => {
+    setOrders((prev) => [order, ...prev]);
+    setShowNewOrder(false);
+  };
 
   return (
     <AppShell pageTitle="Dashboard">
@@ -115,14 +151,13 @@ function Dashboard() {
                 </div>
                 <div className={styles.statText}>
                   <div className={styles.statLabel}>{stat.label}</div>
-                  <div className={styles.statValue}>{stat.value}</div>
+                  <div className={styles.statValue}>{isLoading ? "\u2013" : stat.value}</div>
                   <div className={styles.statSub}>{stat.sub}</div>
                 </div>
                 <button
                   className={styles.statArrow}
-                  aria-disabled="true"
-                  title="Orders — coming soon"
-                  tabIndex={-1}
+                  onClick={() => navigate("/orders")}
+                  title="View orders"
                 >
                   <ChevronRightIcon size={16} />
                 </button>
@@ -150,22 +185,54 @@ function Dashboard() {
               ))}
             </div>
           </div>
-          <EmptyState
-            icon={<InboxIcon size={20} />}
-            title="No orders yet"
-            description={
-              isStaff
-                ? "Orders will show up here as soon as customers start dropping off laundry."
-                : `You don't have any ${
-                    activeTab === "all" ? "" : activeTabLabel + " "
-                  }orders yet. Once you drop off laundry at LabadaGo, they'll appear here with live status.`
-            }
-            action={
-              <Button variant="secondary" disabled>
-                {isStaff ? "Log a new order — coming soon" : "Start a new order — coming soon"}
-              </Button>
-            }
-          />
+
+          {isLoading ? (
+            <div className={styles.loadingRow}>Loading orders...</div>
+          ) : recentOrders.length === 0 ? (
+            <EmptyState
+              icon={<InboxIcon size={20} />}
+              title="No orders yet"
+              description={
+                isStaff
+                  ? "Orders will show up here as soon as customers start dropping off laundry."
+                  : "Once you drop off laundry at LabadaGo, they'll appear here with live status."
+              }
+              action={
+                !isStaff && (
+                  <Button variant="secondary" onClick={() => setShowNewOrder(true)}>
+                    Start a new order
+                  </Button>
+                )
+              }
+            />
+          ) : (
+            <div className={styles.recentList}>
+              {recentOrders.map((order) => (
+                <div className={styles.recentRow} key={order.orderId}>
+                  <div className={styles.recentMain}>
+                    <div className={styles.recentService}>{order.serviceType}</div>
+                    <div className={styles.recentMeta}>
+                      {isStaff ? order.customerName + " \u00b7 " : ""}
+                      {formatDate(order.pickupDate)}
+                    </div>
+                  </div>
+                  <Badge
+                    variant={
+                      order.status === "COMPLETED"
+                        ? "success"
+                        : order.status === "READY"
+                        ? "warning"
+                        : order.status === "IN_PROGRESS"
+                        ? "brand"
+                        : "neutral"
+                    }
+                  >
+                    {STATUS_LABELS[order.status]}
+                  </Badge>
+                </div>
+              ))}
+            </div>
+          )}
         </Card>
 
         {!isStaff && (
@@ -190,6 +257,12 @@ function Dashboard() {
           </Card>
         )}
       </div>
+
+      {showNewOrder && (
+        <Modal title="Place a new order" onClose={() => setShowNewOrder(false)}>
+          <NewOrderForm onCreated={handleCreated} onCancel={() => setShowNewOrder(false)} />
+        </Modal>
+      )}
     </AppShell>
   );
 }

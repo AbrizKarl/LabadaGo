@@ -3,6 +3,8 @@ package edu.cit.Abriz.LabadaGo.repository;
 import edu.cit.Abriz.LabadaGo.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 // JpaRepository already gives us save(), findAll(), findById(), etc for free
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -11,4 +13,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     // used to check if an email is already taken (BR-008: emails must be unique)
     boolean existsByEmail(String email);
+
+    // used by the staff-facing Customers page to list everyone with the
+    // CUSTOMER role, without pulling in staff accounts
+    List<User> findByRoleOrderByNameAsc(String role);
 }

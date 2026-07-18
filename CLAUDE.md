@@ -1,6 +1,6 @@
 # CLAUDE.md — LabadaGo Project Memory
 
-This file is the persistent memory for Claude Code. Read it fully before making any change. It reflects the project state as of **July 18, 2026**.
+This file is the persistent memory for Claude Code. Read it fully before making any change. It reflects the project state as of **July 18, 2026** (updated same day after starting Part 2 mobile work).
 
 ## What this project is
 
@@ -8,7 +8,7 @@ This file is the persistent memory for Claude Code. Read it fully before making 
 
 1. A staff-facing ReactJS web dashboard (order intake, status management, customer list)
 2. A customer-facing web experience (place orders, track status) — same web app, different role
-3. An Android Kotlin mobile app (Part 2 assignment — **barely started**, `mobile/` is still the default Android Studio template)
+3. An Android Kotlin mobile app (Part 2 assignment — **auth flow built**, native Kotlin + XML Views, no Compose)
 
 Repo: https://github.com/AbrizKarl/LabadaGo (branch `main`). Built incrementally across graded school assignments, but treat it as one real, continuously improving product.
 
@@ -20,6 +20,7 @@ Repo: https://github.com/AbrizKarl/LabadaGo (branch `main`). Built incrementally
 - **Frontend:** React (Create React App), React Router, plain **CSS Modules + design tokens** — NO Tailwind, NO component libraries, NO styled-components
 - **Pattern:** Controller → Service → Repository, DTOs for every request/response, never expose entities
 - Frontend stores `token`, `name`, `role` in localStorage; API calls send `Authorization: Bearer <token>`
+- **Mobile:** Native Kotlin, XML Views (Empty Views Activity template, no Jetpack Compose), Retrofit2 + Gson + OkHttp logging interceptor. `SessionManager` (SharedPreferences) stores `token`/`name`/`role` — the mobile equivalent of the web app's localStorage. Base URL is `ApiConfig.BASE_URL` (`http://10.0.2.2:8080/`, the emulator's alias for host localhost) — a single constant to change at deploy time.
 
 ## Critical safety rules
 
@@ -48,7 +49,19 @@ A UI polish pass was completed and verified (npm build + Playwright functional t
 - `Dashboard`: skeleton stat values and recent-order rows, `formatPeso` for revenue, filter-aware empty copy
 - `AuthLayout`: gray-50 page backdrop + soft card shadow
 
-**Status: delivered as a zip (`LabadaGo_polish_pass.zip` in the user's Downloads) — may or may not be merged into this working copy yet. FIRST TASK CHECK: if `src/utils/format.js` does not exist in this project, the polish pass hasn't been merged — offer to apply it from the zip or recreate the changes.** Once merged and verified via `npm start`, commit as: `Polish pass: skeleton loading states, mobile-safe tables, peso formatting, filter-aware empty states`.
+**Status: merged, `npm run build` verified, committed (`434014e`) and pushed to `origin/main`.** No longer pending — this is done.
+
+## Recently completed (July 18, 2026 — mobile Part 2, auth flow)
+
+Native Kotlin auth flow built in `mobile/` on top of the default Android Studio template. Three commits, made but **not yet pushed** (user wants to test on the Pixel 3a API 33 emulator first):
+
+- `a8470e0` — Retrofit + Gson + OkHttp logging interceptor setup, `network/` package (`ApiConfig`, `ApiClient`, `AuthApi`, `RegisterRequest`/`LoginRequest`/`AuthResponse` mirroring the Backend DTOs field-for-field), debug-only cleartext exception scoped to `10.0.2.2` only (`src/debug/res/xml/network_security_config.xml`)
+- `87d64ed` — `LoginActivity` (now the launcher, replacing the template's `MainActivity`, which was deleted) and `RegisterActivity` with client-side validation, real backend error messages (register/login always return HTTP 200 — success is `token != null`, not status code), `SessionManager` (SharedPreferences), indigo brand theme (`#3A4EB0`) + white Material cards
+- `56c539a` — `DashboardActivity`: greets by name, shows role badge, working Log out. `LoginActivity` checks `SessionManager.isLoggedIn()` on launch and skips straight to Dashboard if a session exists.
+
+**Verification note:** `compileDebugKotlin` succeeded (validates all Kotlin + every layout/manifest/string/drawable resource reference). Full `assembleDebug` could not complete in the dev shell — blocked by a missing `jlink` in a VS Code-extension-bundled JRE that Gradle's daemon picked up, unrelated to the app code. Expected to build fine in Android Studio (its own bundled JBR has `jlink`) — **not yet confirmed on the actual emulator**.
+
+**Not yet built:** Orders/Customers/Settings screens on mobile — only the auth flow (Register → Login → Dashboard → Logout) exists so far.
 
 ## Current feature status
 
@@ -61,12 +74,14 @@ A UI polish pass was completed and verified (npm build + Playwright functional t
 - Notifications bell + topbar search are disabled placeholders (intentional — don't fake them)
 - Deployment: NOTHING deployed. Frontend → Vercel (instructor's choice); backend CANNOT run on Vercel — needs Render or Railway (undecided)
 
-**Not started:** the entire Kotlin mobile app (Part 2), analytics/charts (deliberately — no real historical data yet).
+**Mobile (Part 2):** auth flow built (Register/Login/Dashboard/Logout, see above) but **not yet run on the emulator** — treat as unverified until confirmed. Orders/Customers/Settings screens not started.
+
+**Not started:** mobile Orders/Customers/Settings, analytics/charts (deliberately — no real historical data yet).
 
 ## School assignment context (drives priorities)
 
 1. **Part 1** (web setup + auth) — overdue since July 1. Code done; submission PDF still needs 8 screenshots pasted into the existing Word template + export.
-2. **Part 2** (Android Kotlin app connecting to the same backend) — overdue since July 2. Essentially unstarted. Must be **native Kotlin, NOT Flutter**.
+2. **Part 2** (Android Kotlin app connecting to the same backend) — overdue since July 2. Auth flow (Register/Login/Dashboard/Logout) built and committed, **not yet verified on the emulator**, not pushed. Must be **native Kotlin, NOT Flutter** (confirmed: no Compose either, plain XML Views).
 3. **Integration Milestone** — code requirements substantially met by the Orders/Settings/Customers work. Still needs the PDF: ≥3 documented end-to-end workflow tests (2 happy paths + 1 unauthorized-access test — a CUSTOMER hitting staff-only `GET /api/orders` already returns a real 403, use that), commit-history table, contribution statement.
 
 Do NOT resume the old "CleanCloud competitor mega-brief" (rider GPS, 4 roles, Flutter app) — it was rejected as out of scope.

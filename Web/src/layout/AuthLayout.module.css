@@ -4,6 +4,9 @@
   flex-direction: column;
   align-items: center;
   padding: var(--space-10) var(--space-5) var(--space-10);
+  /* one shade deeper than the app background so the card visibly sits on
+     top of the page rather than dissolving into it */
+  background-color: var(--gray-50);
 }
 
 .brand {
@@ -54,4 +57,8 @@
   margin-top: var(--space-6);
   font-size: 12.5px;
   color: var(--gray-400);
+}
+
+.authCard {
+  box-shadow: var(--shadow-sm);
 }

@@ -8,8 +8,10 @@ import Alert from "../components/ui/Alert";
 import EmptyState from "../components/ui/EmptyState";
 import Modal from "../components/ui/Modal";
 import NewOrderForm from "../components/NewOrderForm";
+import Skeleton from "../components/ui/Skeleton";
 import { InboxIcon } from "../components/icons/Icon";
 import { getMyOrders, getAllOrders, updateOrderStatus, STATUS_LABELS } from "../api/ordersApi";
+import { formatPeso } from "../utils/format";
 import styles from "./OrdersPage.module.css";
 
 const TABS = [
@@ -109,7 +111,7 @@ function OrdersPage() {
       </div>
 
       {loadError && (
-        <div style={{ marginBottom: 16 }}>
+        <div className={styles.alertWrap}>
           <Alert variant="error">{loadError}</Alert>
         </div>
       )}
@@ -130,13 +132,29 @@ function OrdersPage() {
         </div>
 
         {isLoading ? (
-          <div className={styles.loadingWrap}>Loading orders...</div>
+          <div className={styles.skeletonList} aria-label="Loading orders">
+            {[0, 1, 2, 3, 4].map((i) => (
+              <div className={styles.skeletonRow} key={i}>
+                <Skeleton width={36} height={10} />
+                <Skeleton width="28%" height={10} />
+                <Skeleton width="18%" height={10} />
+                <Skeleton width={52} height={10} />
+                <Skeleton width={72} height={20} radius="999px" />
+              </div>
+            ))}
+          </div>
         ) : visibleOrders.length === 0 ? (
           <EmptyState
             icon={<InboxIcon size={20} />}
-            title="No orders yet"
+            title={
+              activeTab === "ALL"
+                ? "No orders yet"
+                : `No ${STATUS_LABELS[activeTab].toLowerCase()} orders`
+            }
             description={
-              isStaff
+              activeTab !== "ALL" && orders.length > 0
+                ? "Nothing matches this filter right now \u2014 check the other tabs."
+                : isStaff
                 ? "Orders will show up here as soon as customers start dropping off laundry."
                 : "Once you place an order, it'll appear here with live status."
             }
@@ -149,7 +167,8 @@ function OrdersPage() {
             }
           />
         ) : (
-          <table className={styles.table}>
+          <div className={styles.tableWrap}>
+            <table className={styles.table}>
             <thead>
               <tr>
                 <th>Order</th>
@@ -167,7 +186,7 @@ function OrdersPage() {
                   {isStaff && <td>{order.customerName}</td>}
                   <td>{order.serviceType}</td>
                   <td>{formatDate(order.pickupDate)}</td>
-                  <td className={styles.priceCell}>{"\u20b1" + order.estimatedPrice}</td>
+                  <td className={styles.priceCell}>{formatPeso(order.estimatedPrice)}</td>
                   <td>
                     {isStaff ? (
                       <select
@@ -191,7 +210,8 @@ function OrdersPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+            </table>
+          </div>
         )}
       </Card>
 

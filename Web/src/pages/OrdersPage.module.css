@@ -110,3 +110,45 @@
   color: var(--gray-400);
   font-size: 13.5px;
 }
+
+.alertWrap {
+  margin-bottom: var(--space-4);
+}
+
+/* Lets the table breathe on narrow screens instead of crushing columns —
+   the card scrolls sideways, the page itself never does. */
+.tableWrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tableWrap .table {
+  min-width: 640px;
+}
+
+.table td {
+  white-space: nowrap;
+}
+
+/* Skeleton rows mirror the real table's rhythm so the page doesn't
+   jump when data arrives. */
+.skeletonList {
+  display: flex;
+  flex-direction: column;
+}
+
+.skeletonRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: 14px var(--space-5);
+  border-bottom: 1px solid var(--border);
+}
+
+.skeletonRow:last-child {
+  border-bottom: none;
+}
+
+.skeletonRow > :last-child {
+  margin-left: auto;
+}

@@ -18,7 +18,7 @@ function AuthLayout({ heading, subheading, children, footer }) {
       </Link>
 
       <div className={styles.cardWrap}>
-        <Card padding="md">
+        <Card padding="md" className={styles.authCard}>
           <h1 className={styles.heading}>{heading}</h1>
           {subheading && <p className={styles.subheading}>{subheading}</p>}
           {children}

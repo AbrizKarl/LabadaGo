@@ -8,6 +8,7 @@ import EmptyState from "../components/ui/EmptyState";
 import Modal from "../components/ui/Modal";
 import NewOrderForm from "../components/NewOrderForm";
 import LaundryIllustration from "../components/LaundryIllustration";
+import Skeleton from "../components/ui/Skeleton";
 import {
   InboxIcon,
   PackageIcon,
@@ -17,6 +18,7 @@ import {
   BellIcon,
 } from "../components/icons/Icon";
 import { getMyOrders, getAllOrders, STATUS_LABELS } from "../api/ordersApi";
+import { formatPeso } from "../utils/format";
 import styles from "./Dashboard.module.css";
 
 const CUSTOMER_TABS = [
@@ -107,7 +109,7 @@ function Dashboard() {
     ? [
         { label: "Active orders", value: String(inProgressCount), sub: "Currently being processed", icon: PackageIcon, tone: "brand" },
         { label: "Ready for pickup", value: String(readyCount), sub: "Waiting to be claimed", icon: ClipboardCheckIcon, tone: "success" },
-        { label: "Total revenue", value: "\u20b1" + todayRevenue, sub: "From completed orders", icon: WalletIcon, tone: "warning" },
+        { label: "Total revenue", value: formatPeso(todayRevenue), sub: "From completed orders", icon: WalletIcon, tone: "warning" },
       ]
     : [
         { label: "Orders in progress", value: String(inProgressCount), sub: "Currently being processed", icon: PackageIcon, tone: "brand" },
@@ -151,7 +153,9 @@ function Dashboard() {
                 </div>
                 <div className={styles.statText}>
                   <div className={styles.statLabel}>{stat.label}</div>
-                  <div className={styles.statValue}>{isLoading ? "\u2013" : stat.value}</div>
+                  <div className={styles.statValue}>
+                    {isLoading ? <Skeleton width={44} height={16} /> : stat.value}
+                  </div>
                   <div className={styles.statSub}>{stat.sub}</div>
                 </div>
                 <button
@@ -187,13 +191,24 @@ function Dashboard() {
           </div>
 
           {isLoading ? (
-            <div className={styles.loadingRow}>Loading orders...</div>
+            <div className={styles.recentList} aria-label="Loading orders">
+              {[0, 1, 2].map((i) => (
+                <div className={styles.recentRow} key={i}>
+                  <div className={styles.recentMain}>
+                    <Skeleton width={120} height={10} />
+                  </div>
+                  <Skeleton width={72} height={20} radius="999px" />
+                </div>
+              ))}
+            </div>
           ) : recentOrders.length === 0 ? (
             <EmptyState
               icon={<InboxIcon size={20} />}
-              title="No orders yet"
+              title={activeTab === "all" ? "No orders yet" : "Nothing here"}
               description={
-                isStaff
+                activeTab !== "all" && orders.length > 0
+                  ? "No orders match this filter right now \u2014 try another tab."
+                  : isStaff
                   ? "Orders will show up here as soon as customers start dropping off laundry."
                   : "Once you drop off laundry at LabadaGo, they'll appear here with live status."
               }

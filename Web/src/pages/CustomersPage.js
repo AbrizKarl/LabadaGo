@@ -4,6 +4,7 @@ import AppShell from "../layout/AppShell";
 import Card from "../components/ui/Card";
 import Alert from "../components/ui/Alert";
 import EmptyState from "../components/ui/EmptyState";
+import Skeleton from "../components/ui/Skeleton";
 import { UsersIcon } from "../components/icons/Icon";
 import { getAllCustomers } from "../api/customersApi";
 import styles from "./CustomersPage.module.css";
@@ -51,14 +52,23 @@ function CustomersPage() {
       </div>
 
       {error && (
-        <div style={{ marginBottom: 16 }}>
+        <div className={styles.alertWrap}>
           <Alert variant="error">{error}</Alert>
         </div>
       )}
 
       <Card padding="none">
         {isLoading ? (
-          <div className={styles.loadingWrap}>Loading customers...</div>
+          <div className={styles.skeletonList} aria-label="Loading customers">
+            {[0, 1, 2].map((i) => (
+              <div className={styles.skeletonRow} key={i}>
+                <Skeleton width={28} height={28} radius="50%" />
+                <Skeleton width="22%" height={10} />
+                <Skeleton width="30%" height={10} />
+                <Skeleton width={20} height={10} />
+              </div>
+            ))}
+          </div>
         ) : customers.length === 0 ? (
           <EmptyState
             icon={<UsersIcon size={20} />}
@@ -66,7 +76,8 @@ function CustomersPage() {
             description="Customer accounts will appear here as people register."
           />
         ) : (
-          <table className={styles.table}>
+          <div className={styles.tableWrap}>
+            <table className={styles.table}>
             <thead>
               <tr>
                 <th>Name</th>
@@ -90,7 +101,8 @@ function CustomersPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+            </table>
+          </div>
         )}
       </Card>
     </AppShell>

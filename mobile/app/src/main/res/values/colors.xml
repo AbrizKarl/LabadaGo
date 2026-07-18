@@ -2,4 +2,22 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Brand -->
+    <color name="brand_indigo">#3A4EB0</color>
+    <color name="brand_indigo_dark">#2E3D8C</color>
+    <color name="brand_indigo_tint">#EEF0FA</color>
+
+    <!-- Neutrals -->
+    <color name="surface">#FFFFFF</color>
+    <color name="background">#F4F5FA</color>
+    <color name="text_primary">#1A1D29</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="border">#E1E4EC</color>
+
+    <!-- Semantic -->
+    <color name="danger">#DC2626</color>
+    <color name="danger_tint">#FDECEC</color>
+    <color name="success">#16A34A</color>
+    <color name="success_tint">#EAF7EE</color>
 </resources>

@@ -1,3 +1,34 @@
 <resources>
     <string name="app_name">LabadaGo</string>
+
+    <!-- Login -->
+    <string name="login_heading">Sign in to LabadaGo</string>
+    <string name="login_subheading">Track orders and manage your laundry shop.</string>
+    <string name="login_button">Sign in</string>
+    <string name="login_button_loading">Signing in…</string>
+    <string name="login_no_account">Don\'t have an account?</string>
+    <string name="login_create_one">Create one</string>
+
+    <!-- Register -->
+    <string name="register_heading">Create your account</string>
+    <string name="register_subheading">Set up access for either a customer or shop staff role.</string>
+    <string name="register_account_type">Account type</string>
+    <string name="register_role_customer">Customer</string>
+    <string name="register_role_staff">Shop staff</string>
+    <string name="register_button">Create account</string>
+    <string name="register_button_loading">Creating account…</string>
+    <string name="register_have_account">Already have an account?</string>
+    <string name="register_sign_in">Sign in</string>
+
+    <!-- Shared form fields -->
+    <string name="field_full_name">Full name</string>
+    <string name="field_email">Email</string>
+    <string name="field_password">Password</string>
+    <string name="hint_email">you@example.com</string>
+    <string name="hint_password_min">At least 8 characters</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_greeting_prefix">Hi,</string>
+    <string name="dashboard_role_label">Signed in as</string>
+    <string name="dashboard_logout">Log out</string>
 </resources>

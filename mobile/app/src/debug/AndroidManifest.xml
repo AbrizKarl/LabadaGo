@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Merged into the main manifest only for debug builds (Gradle picks this up
+  automatically from the src/debug source set). Points the app at the
+  cleartext exception defined in network_security_config.xml.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application android:networkSecurityConfig="@xml/network_security_config" />
+</manifest>

@@ -1,4 +1,4 @@
-package edu.cit.Abriz.LabadaGo.dto;
+package edu.cit.Abriz.LabadaGo.customers;
 
 // one row on the staff-facing Customers page
 public class CustomerSummaryResponse {

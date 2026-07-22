@@ -1,9 +1,8 @@
-package edu.cit.Abriz.LabadaGo.service;
+package edu.cit.Abriz.LabadaGo.customers;
 
-import edu.cit.Abriz.LabadaGo.dto.CustomerSummaryResponse;
-import edu.cit.Abriz.LabadaGo.model.User;
-import edu.cit.Abriz.LabadaGo.repository.OrderRepository;
-import edu.cit.Abriz.LabadaGo.repository.UserRepository;
+import edu.cit.Abriz.LabadaGo.orders.OrderRepository;
+import edu.cit.Abriz.LabadaGo.users.User;
+import edu.cit.Abriz.LabadaGo.users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

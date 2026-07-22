@@ -1,6 +1,5 @@
-package edu.cit.Abriz.LabadaGo.repository;
+package edu.cit.Abriz.LabadaGo.users;
 
-import edu.cit.Abriz.LabadaGo.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

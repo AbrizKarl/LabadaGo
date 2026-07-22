@@ -1,11 +1,8 @@
-package edu.cit.Abriz.LabadaGo.service;
+package edu.cit.Abriz.LabadaGo.users;
 
-import edu.cit.Abriz.LabadaGo.dto.AuthResponse;
-import edu.cit.Abriz.LabadaGo.dto.LoginRequest;
-import edu.cit.Abriz.LabadaGo.dto.ProfileResponse;
-import edu.cit.Abriz.LabadaGo.dto.RegisterRequest;
-import edu.cit.Abriz.LabadaGo.model.User;
-import edu.cit.Abriz.LabadaGo.repository.UserRepository;
+import edu.cit.Abriz.LabadaGo.auth.AuthResponse;
+import edu.cit.Abriz.LabadaGo.auth.LoginRequest;
+import edu.cit.Abriz.LabadaGo.auth.RegisterRequest;
 import edu.cit.Abriz.LabadaGo.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

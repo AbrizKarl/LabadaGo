@@ -1,4 +1,4 @@
-package edu.cit.Abriz.LabadaGo.dto;
+package edu.cit.Abriz.LabadaGo.users;
 
 public class ChangePasswordRequest {
 

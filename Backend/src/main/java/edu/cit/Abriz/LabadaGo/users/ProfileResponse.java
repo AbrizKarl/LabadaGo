@@ -1,4 +1,4 @@
-package edu.cit.Abriz.LabadaGo.dto;
+package edu.cit.Abriz.LabadaGo.users;
 
 // what we send back for "my profile" — deliberately excludes the
 // password hash, unlike the User entity itself

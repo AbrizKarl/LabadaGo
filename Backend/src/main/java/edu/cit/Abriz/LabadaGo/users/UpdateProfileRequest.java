@@ -1,4 +1,4 @@
-package edu.cit.Abriz.LabadaGo.dto;
+package edu.cit.Abriz.LabadaGo.users;
 
 // Settings only allows changing the display name for now — email is left
 // out on purpose, since changing it would invalidate the user's existing

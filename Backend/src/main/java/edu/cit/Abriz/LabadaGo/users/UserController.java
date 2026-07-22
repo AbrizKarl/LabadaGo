@@ -1,9 +1,5 @@
-package edu.cit.Abriz.LabadaGo.controller;
+package edu.cit.Abriz.LabadaGo.users;
 
-import edu.cit.Abriz.LabadaGo.dto.ChangePasswordRequest;
-import edu.cit.Abriz.LabadaGo.dto.ProfileResponse;
-import edu.cit.Abriz.LabadaGo.dto.UpdateProfileRequest;
-import edu.cit.Abriz.LabadaGo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;

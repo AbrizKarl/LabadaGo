@@ -1,4 +1,4 @@
-package edu.cit.Abriz.LabadaGo.dto;
+package edu.cit.Abriz.LabadaGo.auth;
 
 // simple object to hold the data coming from the login form
 public class LoginRequest {

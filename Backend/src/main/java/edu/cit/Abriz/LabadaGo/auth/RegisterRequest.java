@@ -1,4 +1,4 @@
-package edu.cit.Abriz.LabadaGo.dto;
+package edu.cit.Abriz.LabadaGo.auth;
 
 // this is just a simple object to hold the data coming from the registration form
 public class RegisterRequest {

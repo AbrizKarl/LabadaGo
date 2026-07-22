@@ -1,9 +1,6 @@
-package edu.cit.Abriz.LabadaGo.controller;
+package edu.cit.Abriz.LabadaGo.auth;
 
-import edu.cit.Abriz.LabadaGo.dto.AuthResponse;
-import edu.cit.Abriz.LabadaGo.dto.LoginRequest;
-import edu.cit.Abriz.LabadaGo.dto.RegisterRequest;
-import edu.cit.Abriz.LabadaGo.service.UserService;
+import edu.cit.Abriz.LabadaGo.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

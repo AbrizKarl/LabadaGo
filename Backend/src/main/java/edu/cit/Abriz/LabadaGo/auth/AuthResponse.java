@@ -1,4 +1,4 @@
-package edu.cit.Abriz.LabadaGo.dto;
+package edu.cit.Abriz.LabadaGo.auth;
 
 // this is what we send back to the frontend after register/login
 public class AuthResponse {

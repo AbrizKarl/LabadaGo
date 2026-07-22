@@ -1,6 +1,4 @@
-package edu.cit.Abriz.LabadaGo.dto;
-
-import edu.cit.Abriz.LabadaGo.model.Order;
+package edu.cit.Abriz.LabadaGo.orders;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package edu.cit.Abriz.LabadaGo.model;
+package edu.cit.Abriz.LabadaGo.orders;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

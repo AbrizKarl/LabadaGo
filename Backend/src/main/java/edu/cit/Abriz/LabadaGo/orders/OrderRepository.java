@@ -1,6 +1,5 @@
-package edu.cit.Abriz.LabadaGo.repository;
+package edu.cit.Abriz.LabadaGo.orders;
 
-import edu.cit.Abriz.LabadaGo.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

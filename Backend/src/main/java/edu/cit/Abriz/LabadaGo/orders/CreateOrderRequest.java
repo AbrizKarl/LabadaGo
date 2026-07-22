@@ -1,4 +1,4 @@
-package edu.cit.Abriz.LabadaGo.dto;
+package edu.cit.Abriz.LabadaGo.orders;
 
 // what the frontend sends when a customer submits the "New Order" form
 public class CreateOrderRequest {

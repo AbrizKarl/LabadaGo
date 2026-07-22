@@ -1,4 +1,4 @@
-package edu.cit.Abriz.LabadaGo.dto;
+package edu.cit.Abriz.LabadaGo.orders;
 
 // what staff send when moving an order to its next status
 // (e.g. PENDING -> IN_PROGRESS -> READY -> COMPLETED)

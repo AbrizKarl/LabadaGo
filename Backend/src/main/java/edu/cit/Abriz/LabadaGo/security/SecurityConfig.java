@@ -57,6 +57,7 @@ public class SecurityConfig {
                 "http://localhost:3000",
                 "http://localhost:5173",
                 "https://labada-go-sigma.vercel.app",
+                "https://labada-go-abrizkarls-projects.vercel.app",
                 "https://labada-6mwa07onp-abrizkarls-projects.vercel.app"
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
